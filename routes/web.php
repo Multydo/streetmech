@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\UserControler;
+use App\http\Controllers\API\HomeController;
+use App\Http\Controllers\API\SearchController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,3 +21,9 @@ Route::get('/', function () {
 });
 Route::post("/register",[UserControler::class,"register"]);
 Route::post("/login",[UserControler::class,"login"]);
+Route::post("/getcars",[HomeController::class,"getCars"]);
+Route::post("/addcars",[HomeController::class,"addCars"]);
+Route::post("/addShops",[HomeController::class,"addShops"]);
+Route::post("/selectcar",[HomeController::class,"selectCar"]);
+Route::post("/search",[SearchController::class,"search"]);
+Route::post("/order",[SearchController::class,"orders"]);

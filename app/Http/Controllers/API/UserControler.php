@@ -10,6 +10,7 @@ use Auth;
 use App\Models\personal_access_token;
 use Illuminate\Support\Carbon;
 
+
 class UserControler extends Controller
 {
      public function register(Request $request){
@@ -47,12 +48,7 @@ class UserControler extends Controller
 
          $token = $user->createToken($request['phone'])->plainTextToken;
 
-        $sessionCon = new Session_controler ;
-        $data=[
-            "key"=> "user_token",
-            "data"=>$token
-        ];
-        $sessionCon->session_selector("put",$data);
+        
         return response()->json([
                 "message"=>"accepted",
                 "state"=>true
@@ -68,37 +64,43 @@ class UserControler extends Controller
         if(Auth::attempt($credentials)){
             
             $user_phone = $request['phone'];
-            $user_info = User::where('phone' , $user_phone)->first();
+            $user_info = User::where('phone' , $user_phone)->select("role")->first();
             
 
             $old_token = personal_access_token::where("name",$user_phone);
             if($old_token){
                 $old_token -> delete();
             }
-
             $user = Auth::user();
-
-        
             $token = $user->createToken($user_phone)->plainTextToken;
             $tokenStatus = personal_access_token::find( $token);
-            
-
             $tokenStatus->last_used_at = Carbon::now();
             $tokenStatus->save();
-
-            
-            
-           
-                return response() -> json([
-                    "massage"=>"user loged in",
-                    "state" => true
-                ],200);
+            $sessionCon = new Session_controler ;
+            $user_data=[
+                "phone"=>$user_phone,
+                "role" =>$user_info["role"],
+                "plate"=>"",
+                "wphone"=>"",
+                "city"=>""
+            ];
+            $data=[
+                "key"=>"user_data",
+                "data"=>$user_data
+            ];
+            $sessionCon->session_selector("put",$data);
+            return response() -> json([
+                "massage"=>"user loged in",
+                "role"=>$user_info["role"],
+                "state" => true
+            ],200);
             
             
 
         }else{
             return response()->json([
                 "message"=>"phone or password do not match",
+                "role"=>false,
                 "state"=>false
             ],401);
         }

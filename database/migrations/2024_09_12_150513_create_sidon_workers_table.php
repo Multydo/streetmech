@@ -13,10 +13,11 @@ return new class extends Migration
     {
         Schema::create('sidon_workers', function (Blueprint $table) {
             $table->id();
-
+$table->string("shop_name");
             $table->string("street");
             $table->string("more_details");
             $table->string("phone");
+            $table->string("profession");
             $table->timestamps();
         });
     }
