@@ -1,0 +1,116 @@
+1. /register 
+
+    Register Function
+    Purpose:
+        To register a new user by creating a new user record in the database.
+
+        Required Request Inputs:
+        name: The user's full name.
+        role: The role assigned to the user (e.g., admin, user).
+        phone: The user's unique phone number.
+        password: The user's password.
+
+        {
+            "name":"daniel",
+            "phone":"81892788",
+            "role":"worker",
+            "password":"12345678"
+        }
+
+    Responses:
+
+        Successful Registration (HTTP 201 Created):
+
+        {
+            "message": "accepted",
+            "state": true
+        }
+
+        Status Code: 201
+        Indicates that the user has been successfully registered.
+
+        Phone Number Already Exists (HTTP 409 Conflict):
+
+        {
+            "message": "user phone already exists",
+            "state": false
+        }
+
+        Status Code: 409
+        Indicates that the phone number provided is already associated with another user.
+
+2. /login 
+
+    Login Function
+    Purpose:
+        To authenticate a user using their phone number and password.
+
+        Required Request Inputs:
+        phone: The user's registered phone number.
+        password: The user's password.
+
+        {
+            "phone":"81892788",
+            "password":"12345678"
+        }
+
+    Responses:
+
+        Successful Login (HTTP 200 OK):
+        {
+            "message": "user logged in",
+            "role": "user_role_here",
+            "state": true
+        }
+
+        Status Code: 200
+        Indicates that the user has been successfully authenticated.
+
+        Authentication Failed (HTTP 401 Unauthorized):
+
+        {
+            "message": "phone or password do not match",
+            "role": false,
+            "state": false
+        }
+
+        Status Code: 401
+        Indicates that the authentication credentials are invalid.
+3. /getcars 
+
+    Purpose:
+        Retrieves all cars associated with the currently logged-in user.
+
+    Responses:
+        Successful Retrieval of Cars (HTTP 200 OK):
+
+        When cars are found:
+        {
+            "message": "user cars are found",
+            "state": true,
+            "cars": [
+                {
+                    "id": 1,
+                    "plate": "ABC123",
+                    "brand": "Toyota",
+                    "year_model": "2020",
+                    "color": "Red"
+                },
+                // Additional cars...
+            ]
+        }
+
+        When no cars are found:
+        {
+            "message": "no cars were found",
+            "state": false,
+            "cars": ""
+        }
+
+        Internal Server Error (HTTP 500 Internal Server Error):
+        {
+            "message": "internal server error (problem in session)"
+
+        }
+
+4. 
