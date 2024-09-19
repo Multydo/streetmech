@@ -11,8 +11,8 @@ use App\Models\personal_access_token;
 use Illuminate\Support\Carbon;
 
 
-class UserControler extends Controller
-{
+class UserControler extends Controller{
+
      public function register(Request $request){
         $user_data = $request->all();
         
