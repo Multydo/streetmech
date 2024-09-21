@@ -1,0 +1,668 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Street Mech APIs",
+        "description": "Street Mech helps drivers quickly find and order the nearest mechanic or tire repair service during car malfunctions in unfamiliar areas.",
+        "version": "2.0.0"
+    },
+    "paths": {
+        "/getcars": {
+            "post": {
+                "tags": [
+                    "Home"
+                ],
+                "summary": "Get user cars",
+                "description": "Fetches all the cars associated with the user session",
+                "operationId": "011070d3da2d8d95af46f4df99d304fe",
+                "responses": {
+                    "200": {
+                        "description": "List of user cars",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "user cars are found"
+                                        },
+                                        "state": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "cars": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "plate": {
+                                                        "type": "string",
+                                                        "example": "ABC123"
+                                                    },
+                                                    "brand": {
+                                                        "type": "string",
+                                                        "example": "Toyota"
+                                                    },
+                                                    "year_model": {
+                                                        "type": "string",
+                                                        "example": "2015"
+                                                    },
+                                                    "color": {
+                                                        "type": "string",
+                                                        "example": "Red"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "internal server error (problem in session)"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/addcars": {
+            "post": {
+                "tags": [
+                    "Home"
+                ],
+                "summary": "Add a new car",
+                "description": "Adds a new car to the user's account",
+                "operationId": "bb4ae3f1f920965d0b157d9d2a693bd4",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "plate",
+                                    "brand",
+                                    "year_model",
+                                    "color"
+                                ],
+                                "properties": {
+                                    "plate": {
+                                        "type": "string",
+                                        "example": "ABC123"
+                                    },
+                                    "brand": {
+                                        "type": "string",
+                                        "example": "Toyota"
+                                    },
+                                    "year_model": {
+                                        "type": "string",
+                                        "example": "2015"
+                                    },
+                                    "color": {
+                                        "type": "string",
+                                        "example": "Red"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "New car added",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "user new car is added"
+                                        },
+                                        "state": {
+                                            "type": "boolean",
+                                            "example": true
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "internal server error (problem in session)"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/addShops": {
+            "post": {
+                "tags": [
+                    "Home"
+                ],
+                "summary": "Add a new shop",
+                "description": "Adds a new shop based on the city to the user's account",
+                "operationId": "ef50a58f2d31c9b02b040810b9d76d13",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "city",
+                                    "shop_name",
+                                    "street",
+                                    "more_details",
+                                    "profession"
+                                ],
+                                "properties": {
+                                    "city": {
+                                        "type": "string",
+                                        "example": "beirut"
+                                    },
+                                    "shop_name": {
+                                        "type": "string",
+                                        "example": "John's Garage"
+                                    },
+                                    "street": {
+                                        "type": "string",
+                                        "example": "Main Street"
+                                    },
+                                    "more_details": {
+                                        "type": "string",
+                                        "example": "Near the central park"
+                                    },
+                                    "profession": {
+                                        "type": "string",
+                                        "example": "Mechanic"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "New shop added",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "user new shop is saved"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "internal server error (problem in session)"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/selectcar": {
+            "post": {
+                "tags": [
+                    "Home"
+                ],
+                "summary": "Select a car",
+                "description": "Selects a car for the current session",
+                "operationId": "a15d0f9488f95ea8fc70f75d4890c84f",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "plate"
+                                ],
+                                "properties": {
+                                    "plate": {
+                                        "type": "string",
+                                        "example": "ABC123"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Car selected successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "car selected"
+                                        },
+                                        "state": {
+                                            "type": "boolean",
+                                            "example": true
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "internal server error (problem in session)"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/search": {
+            "post": {
+                "tags": [
+                    "Search"
+                ],
+                "summary": "Search for shops",
+                "description": "Searches for available shops in a specified city",
+                "operationId": "289e44783351a6847216358a42a09a01",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "city"
+                                ],
+                                "properties": {
+                                    "city": {
+                                        "type": "string",
+                                        "example": "beirut"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "List of shops found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "we have shops"
+                                        },
+                                        "state": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "shops": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "internal server error (problem in session)"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/order": {
+            "post": {
+                "tags": [
+                    "Search"
+                ],
+                "summary": "Place an order",
+                "description": "Creates an order for a car repair based on user and session data",
+                "operationId": "ecfdac45a05fa0b861255b3aa9f05607",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "id"
+                                ],
+                                "properties": {
+                                    "id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Order successfully created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "request is set"
+                                        },
+                                        "plate": {
+                                            "type": "string",
+                                            "example": "ABC123"
+                                        },
+                                        "brand": {
+                                            "type": "string",
+                                            "example": "Toyota"
+                                        },
+                                        "year_model": {
+                                            "type": "string",
+                                            "example": "2015"
+                                        },
+                                        "color": {
+                                            "type": "string",
+                                            "example": "Red"
+                                        },
+                                        "workerP": {
+                                            "type": "string",
+                                            "example": "1234567890"
+                                        },
+                                        "city": {
+                                            "type": "string",
+                                            "example": "beirut"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "internal server error (problem in session)"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/register": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Register a new user",
+                "description": "Registers a new user in the system with a unique phone number.",
+                "operationId": "c5911bae06e6c8f95f61cb6ac6a2e7cb",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "phone",
+                                    "password",
+                                    "role"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "John Doe"
+                                    },
+                                    "phone": {
+                                        "type": "string",
+                                        "example": "1234567890"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "strongpassword123"
+                                    },
+                                    "role": {
+                                        "type": "string",
+                                        "example": "admin"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "User successfully registered",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "accepted"
+                                        },
+                                        "state": {
+                                            "type": "boolean",
+                                            "example": true
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "User phone already exists",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "user phone already exists"
+                                        },
+                                        "state": {
+                                            "type": "boolean",
+                                            "example": false
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/login": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Login a user",
+                "description": "Log in a user with phone and password",
+                "operationId": "4e8072f436b4446ae2c713a1ed56b258",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "phone",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "phone": {
+                                        "type": "string",
+                                        "example": "1234567890"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "password123"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User successfully logged in",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "user logged in"
+                                        },
+                                        "role": {
+                                            "type": "string",
+                                            "example": "admin"
+                                        },
+                                        "state": {
+                                            "type": "boolean",
+                                            "example": true
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Phone or password do not match",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "phone or password do not match"
+                                        },
+                                        "state": {
+                                            "type": "boolean",
+                                            "example": false
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "description": "Enter your bearer token in the format **Bearer &lt;token&gt;**",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Home",
+            "description": "Home"
+        },
+        {
+            "name": "Search",
+            "description": "Search"
+        },
+        {
+            "name": "User",
+            "description": "User"
+        }
+    ]
+}

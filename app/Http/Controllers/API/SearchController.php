@@ -16,6 +16,38 @@ use App\Models\order;
 
 class SearchController extends Controller
 {
+
+    /**
+     * @OA\Post(
+     *     path="/search",
+     *     summary="Search for shops",
+     *     description="Searches for available shops in a specified city",
+     *     tags={"Search"},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"city"},
+     *             @OA\Property(property="city", type="string", example="beirut")
+     *         ),
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="List of shops found",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="we have shops"),
+     *             @OA\Property(property="state", type="boolean", example=true),
+     *             @OA\Property(property="shops", type="array", @OA\Items(type="object"))
+     *         ),
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Internal server error",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="internal server error (problem in session)")
+     *         ),
+     *     ),
+     * )
+     */
     public function search(Request $request){
           $sessionCon = new Session_controler() ;
         $data=[
@@ -76,6 +108,41 @@ class SearchController extends Controller
         }
 
     }
+    /**
+     * @OA\Post(
+     *     path="/order",
+     *     summary="Place an order",
+     *     description="Creates an order for a car repair based on user and session data",
+     *     tags={"Search"},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"id"},
+     *             @OA\Property(property="id", type="integer", example=1)
+     *         ),
+     *     ),
+     *     @OA\Response(
+     *         response=201,
+     *         description="Order successfully created",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="request is set"),
+     *             @OA\Property(property="plate", type="string", example="ABC123"),
+     *             @OA\Property(property="brand", type="string", example="Toyota"),
+     *             @OA\Property(property="year_model", type="string", example="2015"),
+     *             @OA\Property(property="color", type="string", example="Red"),
+     *             @OA\Property(property="workerP", type="string", example="1234567890"),
+     *             @OA\Property(property="city", type="string", example="beirut")
+     *         ),
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Internal server error",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="internal server error (problem in session)")
+     *         ),
+     *     ),
+     * )
+     */
 
     public function orders(Request $request){
         $sessionCon = new Session_controler() ;

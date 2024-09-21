@@ -13,7 +13,42 @@ use Illuminate\Support\Carbon;
 
 class UserControler extends Controller{
 
-     public function register(Request $request){
+    /**
+     * @OA\Post(
+     *     path="/register",
+     *     summary="Register a new user",
+     *     description="Registers a new user in the system with a unique phone number.",
+     *     tags={"User"},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"name","phone","password","role"},
+     *             @OA\Property(property="name", type="string", example="John Doe"),
+     *             @OA\Property(property="phone", type="string", example="1234567890"),
+     *             @OA\Property(property="password", type="string", example="strongpassword123"),
+     *             @OA\Property(property="role", type="string", example="admin")
+     *         ),
+     *     ),
+     *     @OA\Response(
+     *         response=201,
+     *         description="User successfully registered",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="accepted"),
+     *             @OA\Property(property="state", type="boolean", example=true)
+     *         ),
+     *     ),
+     *     @OA\Response(
+     *         response=409,
+     *         description="User phone already exists",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="user phone already exists"),
+     *             @OA\Property(property="state", type="boolean", example=false)
+     *         ),
+     *     ),
+     * )
+     */
+
+    public function register(Request $request){
         $user_data = $request->all();
         
         $user_phone = $user_data['phone'];
@@ -57,6 +92,39 @@ class UserControler extends Controller{
 
         
     }
+    /**
+     * @OA\Post(
+     *     path="/login",
+     *     summary="Login a user",
+     *     description="Log in a user with phone and password",
+     *     tags={"User"},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"phone","password"},
+     *             @OA\Property(property="phone", type="string", example="1234567890"),
+     *             @OA\Property(property="password", type="string", example="password123")
+     *         ),
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="User successfully logged in",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="user logged in"),
+     *             @OA\Property(property="role", type="string", example="admin"),
+     *             @OA\Property(property="state", type="boolean", example=true)
+     *         ),
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Phone or password do not match",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="phone or password do not match"),
+     *             @OA\Property(property="state", type="boolean", example=false)
+     *         ),
+     *     )
+     * )
+     */
 
 
     public function login(Request $request){
